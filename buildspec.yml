@@ -15,7 +15,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
+      - echo Pushing the Docker image... 
       - docker push $ecr
       - printf '[{\"name\":\"%s\",\"imageUri\":\"%s\"}]' $image $ecr > imagedefinitions.json
 artifacts:
