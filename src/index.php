@@ -1,4 +1,4 @@
 <h1>Hello PHP!</h1>
-<!--?php 
+<?php 
 echo "Hello My First PHP app v2!";
-?-->
+?>
