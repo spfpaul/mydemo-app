@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo $ecr; echo $image
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ecr
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t $image:latest .
+      - docker tag $image:latest $ecr    
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image... 
+      - docker push $ecr
+      - printf '[{\"name\":\"%s\",\"imageUri\":\"%s\"}]' $image $ecr > imagedefinitions.json
+artifacts:
+  files:
+    - 'imagedefinitions.json'
